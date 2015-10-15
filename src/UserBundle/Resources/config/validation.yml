@@ -1,0 +1,4 @@
+AppBundle\Model\User:
+    getters:
+        email:
+            - Email:
