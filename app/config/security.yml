@@ -20,10 +20,7 @@ security:
         debug:
             pattern:    ^/(_(profiler|wdt)|css|images|js)/
             security:   false
-        password:
-            pattern:    ^/Users/reset
-            security:   false
         auth_secured:
-            pattern:   ^/
+            pattern:   ^/rides
             stateless: true
             auth:      true

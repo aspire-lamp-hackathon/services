@@ -70,7 +70,7 @@ class RidesController extends AppController
                     }
                     if ($nearestPoint->getSource()) {
                         $data[$index]['latitude'] = $nearestPoint->getSource()->getX();
-                        $data[$index++]['longitude'] = $nearestPoint->getSource()->getY();
+                        $data[$index ++]['longitude'] = $nearestPoint->getSource()->getY();
                     }
                     $this->actionSuccess(array(
                         'points' => $data
