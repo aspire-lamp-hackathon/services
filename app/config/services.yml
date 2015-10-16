@@ -4,6 +4,18 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    auth.security.authentication.provider:
+        class: AppBundle\Security\Authentication\Provider\AuthProvider
+        arguments: [ dummy_arg ]
+        
+    auth_user_provider:
+        class: AppBundle\Security\User\AuthUser
+        arguments:
+            - @service_container                    
+
+    auth.security.authentication.listener:
+        class: AppBundle\Security\Firewall\AuthListener
+        arguments:
+            - @security.context
+            - @security.authentication.manager
+            - @service_container            

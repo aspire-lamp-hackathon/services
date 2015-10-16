@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use AppBundle\Security\Authentication\Token\AuthUserToken;
+use AppBundle\Security\Authentication\Token\AuthToken;
 
 class AuthListener implements ListenerInterface
 {
@@ -28,17 +29,12 @@ class AuthListener implements ListenerInterface
     {
         $request = $event->getRequest();
         
-        $authRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
-        if (! $request->headers->has('x-auth') || 1 !== preg_match($authRegex, $request->headers->get('x-auth'), $matches)) {
+        if (! $request->get('apiKey')) {
             return;
         }
         
-        $token = new AuthUserToken();
-        $token->setUser($matches[1]);
-        
-        $token->digest = $matches[2];
-        $token->nonce = $matches[3];
-        $token->created = $matches[4];
+        $token = new AuthToken();
+        $token->setUser($request->get('apiKey'));
         
         try {
             $authToken = $this->authenticationManager->authenticate($token);

@@ -1,24 +1,29 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+    always_authenticate_before_granting:    true 
+    erase_credentials:                      false 
+    session_fixation_strategy:              none 
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
     providers:
-        in_memory:
-            memory: ~
-
+        chain_provider:
+            chain: 
+                providers: [ auth_secured ]
+        auth_secured:
+            #id: aria.security.user.provider.api
+            id: auth_user_provider
+            
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        debug:
+            pattern:    ^/(_(profiler|wdt)|css|images|js)/
+            security:   false
+        password:
+            pattern:    ^/Users/reset
+            security:   false
+        auth_secured:
+            pattern:   ^/user/login/
+            stateless: true
+            auth:      true

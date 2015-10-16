@@ -2,3 +2,7 @@ user_register:
     path:     /user/
     defaults: { _controller: UserBundle:User:register }
     methods: [POST]
+user_login:
+    path:     /user/login/
+    defaults: { _controller: UserBundle:User:login }
+    methods: [POST]    

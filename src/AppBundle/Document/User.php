@@ -2,16 +2,19 @@
 namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * @MongoDB\Document
  */
-class User
+class User implements UserInterface, EquatableInterface
 {
+
     /**
      * @MongoDB\Id
      */
-    protected  $id;
+    protected $id;
 
     /**
      * @MongoDB\String
@@ -22,21 +25,18 @@ class User
      * @MongoDB\String
      */
     protected $password;
-    
 
     /**
      * @MongoDB\Float
      */
     protected $mobile;
-    
+
     /**
-     * @MongoDB\Float
+     * @MongoDB\String
      */
     protected $name;
-    
-    
+
     protected $confirmPassword;
-    
 
     /**
      * Get id
@@ -51,7 +51,7 @@ class User
     /**
      * Set email
      *
-     * @param string $email
+     * @param string $email            
      * @return self
      */
     public function setEmail($email)
@@ -73,7 +73,7 @@ class User
     /**
      * Set password
      *
-     * @param string $password
+     * @param string $password            
      * @return self
      */
     public function setPassword($password)
@@ -95,7 +95,7 @@ class User
     /**
      * Set mobile
      *
-     * @param float $mobile
+     * @param float $mobile            
      * @return self
      */
     public function setMobile($mobile)
@@ -117,7 +117,7 @@ class User
     /**
      * Set name
      *
-     * @param float $name
+     * @param float $name            
      * @return self
      */
     public function setName($name)
@@ -135,11 +135,11 @@ class User
     {
         return $this->name;
     }
-    
+
     /**
      * Set Confirm Password
      *
-     * @param float $confirmPassword
+     * @param float $confirmPassword            
      * @return self
      */
     public function setConfirmPassword($confirmPassword)
@@ -147,7 +147,7 @@ class User
         $this->confirmPassword = $confirmPassword;
         return $this;
     }
-    
+
     /**
      * Get Confirm Password
      *
@@ -157,9 +157,48 @@ class User
     {
         return $this->confirmPassword;
     }
-    
+
     public function isConfirmPasswordMatched()
     {
-        return ($this->getConfirmPassword()=== $this->getPassword());
+        return ($this->getConfirmPassword() === $this->getPassword());
+    }
+
+    public function getRoles()
+    {
+        return array();
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {}
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (! $user instanceof WebserviceUser) {
+            return false;
+        }
+        
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+        
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+        
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+        
+        return true;
     }
 }
