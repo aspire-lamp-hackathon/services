@@ -1,6 +1,6 @@
 <?php
 
-namespace RideBundle\Tests\Controller;
+namespace RidesBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

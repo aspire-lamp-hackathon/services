@@ -1,9 +1,9 @@
 <?php
 
-namespace RideBundle;
+namespace RidesBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RideBundle extends Bundle
+class RidesBundle extends Bundle
 {
 }
