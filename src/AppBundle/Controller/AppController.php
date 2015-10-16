@@ -53,7 +53,7 @@ class AppController extends Controller
         foreach ($form->all() as $childName => $child) {
             if ($child->count() > 0 && isset($requestData[$childName])) {
                 foreach ($child as $grandChildName => $grandChild) {
-                    $filteredInput[$childName][$grandChildName] = $this->filterInput($requestData[$childName], $grandChild);
+                    $filteredInput[$childName][$grandChildName] = $this->sanitizeInput($requestData[$childName], $grandChild);
                 }
             }
             
