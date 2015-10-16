@@ -24,6 +24,6 @@ security:
             pattern:    ^/Users/reset
             security:   false
         auth_secured:
-            pattern:   ^/user/login/
+            pattern:   ^/
             stateless: true
             auth:      true

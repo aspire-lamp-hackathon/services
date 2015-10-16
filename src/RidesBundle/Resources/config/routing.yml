@@ -1,4 +1,9 @@
 ride_register:
     path:     /ride/
-    defaults: { _controller: RidesBundle:Rides:search }
+    defaults: { _controller: RidesBundle:Rides:save }
     methods: [POST]
+
+ride_search:
+    path:     /ride/search/
+    defaults: { _controller: RidesBundle:Rides:search }
+    methods: [POST]    

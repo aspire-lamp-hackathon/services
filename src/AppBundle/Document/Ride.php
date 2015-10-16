@@ -8,16 +8,15 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * @MongoDB\Index(keys={"source"="2d"})
  * @MongoDB\Index(keys={"destination"="2d"})
  */
-
 class Ride
 {
     /** @MongoDB\Id */
     protected $id;
 
-    /** @MongoDB\EmbedOne(targetDocument="AppBundle\Document\Coordinates") */
+    /** @MongoDB\EmbedOne(targetDocument="Coordinates") */
     protected $source;
 
-    /** @MongoDB\EmbedOne(targetDocument="AppBundle\Document\Coordinates") */
+    /** @MongoDB\EmbedOne(targetDocument="Coordinates") */
     protected $destination;
     
     /** @MongoDB\Date */
@@ -27,7 +26,13 @@ class Ride
     protected $persons;
     
     /** @MongoDB\Int */
-    protected $rideOfferInd;   
+    protected $rideOfferInd;
+    
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\User")
+     */
+    protected $user;
+    
 
     /**
      * Get id
@@ -38,7 +43,7 @@ class Ride
     {
         return $this->id;
     }
-
+    
     /**
      * Set source
      *
@@ -50,7 +55,7 @@ class Ride
         $this->source = $source;
         return $this;
     }
-
+    
     /**
      * Get source
      *
@@ -60,7 +65,7 @@ class Ride
     {
         return $this->source;
     }
-
+    
     /**
      * Set destination
      *
@@ -72,7 +77,7 @@ class Ride
         $this->destination = $destination;
         return $this;
     }
-
+    
     /**
      * Get destination
      *
@@ -82,7 +87,7 @@ class Ride
     {
         return $this->destination;
     }
-
+    
     /**
      * Set dateOfJourney
      *
@@ -94,7 +99,7 @@ class Ride
         $this->dateOfJourney = $dateOfJourney;
         return $this;
     }
-
+    
     /**
      * Get dateOfJourney
      *
@@ -104,7 +109,7 @@ class Ride
     {
         return $this->dateOfJourney;
     }
-
+    
     /**
      * Set persons
      *
@@ -116,7 +121,7 @@ class Ride
         $this->persons = $persons;
         return $this;
     }
-
+    
     /**
      * Get persons
      *
@@ -126,7 +131,7 @@ class Ride
     {
         return $this->persons;
     }
-
+    
     /**
      * Set rideOfferInd
      *
@@ -138,7 +143,7 @@ class Ride
         $this->rideOfferInd = $rideOfferInd;
         return $this;
     }
-
+    
     /**
      * Get rideOfferInd
      *
@@ -147,5 +152,82 @@ class Ride
     public function getRideOfferInd()
     {
         return $this->rideOfferInd;
+    }
+    
+    /**
+     * Set user
+     *
+     * @param AppBundle\Document\User $user
+     * @return self
+     */
+    public function setUser(\AppBundle\Document\User $user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+    
+    /**
+     * Get user
+     *
+     * @return AppBundle\Document\User $user
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}
+
+/** @MongoDB\EmbeddedDocument */
+class Coordinates
+{
+    /** @MongoDB\Float */
+    protected $x;
+
+    /** @MongoDB\Float */
+    protected $y;
+    
+
+    /**
+     * Set x
+     *
+     * @param float $x
+     * @return self
+     */
+    public function setX($x)
+    {
+        $this->x = $x;
+        return $this;
+    }
+    
+    /**
+     * Get x
+     *
+     * @return float $x
+     */
+    public function getX()
+    {
+        return $this->x;
+    }
+    
+    /**
+     * Set y
+     *
+     * @param float $y
+     * @return self
+     */
+    public function setY($y)
+    {
+        $this->y = $y;
+        return $this;
+    }
+    
+    /**
+     * Get y
+     *
+     * @return float $y
+     */
+    public function getY()
+    {
+        return $this->y;
     }
 }
