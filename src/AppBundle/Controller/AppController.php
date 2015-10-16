@@ -28,7 +28,14 @@ class AppController extends Controller
      */
     public function filterInput(Request $request, Form $form)
     {
-        $filteredInput = $this->sanitizeInput($request->request->all(), $form);
+        $requestParams = array();
+        if ($request->getContentType() == 'json') {
+            $requestParams = json_decode($request->getContent(), true);
+        } else {
+            $requestParams = $request->request->all();
+        }
+        
+        $filteredInput = $this->sanitizeInput($requestParams, $form);
         
         $request->request->set($form->getName(), $filteredInput);
     }
@@ -100,7 +107,8 @@ class AppController extends Controller
     /**
      * Method to mark the execution of the action as sucess
      *
-     * @param $data to be returned in the response
+     * @param $data to
+     *            be returned in the response
      */
     protected function actionSuccess($data = null)
     {

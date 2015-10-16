@@ -4,18 +4,24 @@ AppBundle\Document\User:
             - NotBlank:
                 message: Email address cannot be blank
             - Email:
-                message: Please provide a valid email address
+                message: Email address is invalid
         mobile:
             - Length: 
                 max: 10
                 maxMessage: Mobile number should be 10 characters
+        confirmPassword:
+            - NotBlank:
+                message: Confirm Password cannot be blank
         password:
             - NotBlank:
-                message: Password cannot be blank
+                message: Password cannot be blank                
         name:
             - NotBlank:
-                message: First Name cannot be blank
+                message: Name cannot be blank
             - Length:
                 max: 100
-                maxMessage: First Name should not exceed 100 characters        
+                maxMessage: Name should not exceed 100 characters
+        confirmPasswordMatched:
+            - 'True':
+                message: Password and confirm password aren't matching                     
             

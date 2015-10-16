@@ -137,9 +137,9 @@ class User
     }
     
     /**
-     * Set name
+     * Set Confirm Password
      *
-     * @param float $name
+     * @param float $confirmPassword
      * @return self
      */
     public function setConfirmPassword($confirmPassword)
@@ -149,12 +149,17 @@ class User
     }
     
     /**
-     * Get name
+     * Get Confirm Password
      *
-     * @return float $name
+     * @return float $confirmPassword
      */
     public function getConfirmPassword()
     {
         return $this->confirmPassword;
+    }
+    
+    public function isConfirmPasswordMatched()
+    {
+        return ($this->getConfirmPassword()=== $this->getPassword());
     }
 }

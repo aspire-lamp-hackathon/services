@@ -11,7 +11,9 @@ class RegisterType extends AbstractType
     {
         $builder->add('email', 'email');
         $builder->add('mobile', 'number');
-        $builder->add('password', 'number');
+        $builder->add('name', 'email');        
+        $builder->add('password', 'text');
+        $builder->add('confirm_password', 'text');
     }
 
     public function getName()
