@@ -3,11 +3,9 @@ namespace UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Model\User;
 use AppBundle\Controller\AppController;
-use AppBundle\Model\AppBundle\Model;
 use UserBundle\Form\Type\RegisterType;
-use Symfony\Component\HttpFoundation\Symfony\Component\HttpFoundation;
+use AppBundle\Document\User;
 
 class UserController extends AppController
 {
@@ -17,14 +15,16 @@ class UserController extends AppController
         try {
             $user = new User();
             $form = $this->createForm(new RegisterType(), $user);
+            
             $this->filterInput($request, $form);
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $user->save();
-                $response = array(
-                    'errorCode' => 0,
-                    'errorMessage' => null
-                );
+                $dm = $this->get('doctrine_mongodb')->getManager();
+                $dm->persist($user);
+                $dm->flush();
+                $this->actionSuccess(array(
+                    'user_id' => $user->getId()
+                ));
             } else {
                 $this->addFormErrors($form);
             }

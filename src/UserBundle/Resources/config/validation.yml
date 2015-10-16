@@ -1,4 +1,21 @@
-AppBundle\Model\User:
+AppBundle\Document\User:
     getters:
         email:
+            - NotBlank:
+                message: Email address cannot be blank
             - Email:
+                message: Please provide a valid email address
+        mobile:
+            - Length: 
+                max: 10
+                maxMessage: Mobile number should be 10 characters
+        password:
+            - NotBlank:
+                message: Password cannot be blank
+        name:
+            - NotBlank:
+                message: First Name cannot be blank
+            - Length:
+                max: 100
+                maxMessage: First Name should not exceed 100 characters        
+            
